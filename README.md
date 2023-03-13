@@ -74,7 +74,7 @@ echo \
   
   
 ## step fourteen  
-sudo apt-get update
+sudo apt-get update \
 sudo apt-get install -y apt-transport-https ca-certificates curl
 
 ## step fifteen
@@ -85,24 +85,24 @@ sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://pack
 echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
 ## step seventeen
-sudo apt-get update
-sudo apt-get install -y kubelet kubeadm kubectl
-sudo apt-mark hold kubelet kubeadm kubectl
+sudo apt-get update \
+sudo apt-get install -y kubelet kubeadm kubectl \
+sudo apt-mark hold kubelet kubeadm kubectl \
  
  
 ## step eighteen  your IP address and Token will be different depending on your own cluster.
 
-sudo apt-get install -y jq
-local_ip="$(ip --json a s | jq -r '.[] | if .ifname == "eth1" then .addr_info[] | if .family == "inet" then .local else empty end else empty end')"
+sudo apt-get install -y jq \
+local_ip="$(ip --json a s | jq -r '.[] | if .ifname == "eth1" then .addr_info[] | if .family == "inet" then .local else empty end else empty end')" \
 cat > /etc/default/kubelet << EOF
 KUBELET_EXTRA_ARGS=--node-ip=$local_ip
 EOF
 
 ## step nineteen to implemented only on master node
 
-IPADDR="x.x.x.x" replace x with the IP address of your master node
-NODENAME=$(hostname -s)
-POD_CIDR="192.168.0.0/16"
+IPADDR="x.x.x.x" replace x with the IP address of your master node \
+NODENAME=$(hostname -s) \
+POD_CIDR="192.168.0.0/16" \
 
 sudo kubeadm init --apiserver-advertise-address=$IPADDR  --apiserver-cert-extra-sans=$IPADDR  --pod-network-cidr=$POD_CIDR --node-name $NODENAME --ignore-preflight-errors Swap
 
