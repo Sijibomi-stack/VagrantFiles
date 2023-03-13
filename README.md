@@ -87,7 +87,7 @@ echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https:/
 ## step seventeen
 sudo apt-get update \
 sudo apt-get install -y kubelet kubeadm kubectl \
-sudo apt-mark hold kubelet kubeadm kubectl \
+sudo apt-mark hold kubelet kubeadm kubectl 
  
  
 ## step eighteen  your IP address and Token will be different depending on your own cluster.
@@ -102,7 +102,7 @@ EOF
 
 IPADDR="x.x.x.x" replace x with the IP address of your master node \
 NODENAME=$(hostname -s) \
-POD_CIDR="192.168.0.0/16" \
+POD_CIDR="192.168.0.0/16" 
 
 sudo kubeadm init --apiserver-advertise-address=$IPADDR  --apiserver-cert-extra-sans=$IPADDR  --pod-network-cidr=$POD_CIDR --node-name $NODENAME --ignore-preflight-errors Swap
 
